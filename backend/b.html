@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Horizontal Time Scale Chart</title>
+    <!-- Include Plotly.js library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<!-- Container for the chart -->
+<div id="chart-container"></div>
+
+<!-- JavaScript code to generate the chart -->
+<script>
+// Example data (timestamps and sample values)
+const timestamps = [
+  new Date('2024-01-01T00:00:00Z'),
+  //new Date('2024-01-02T00:00:00Z'),
+  new Date('2024-01-01T12:00:00Z')
+  // Add more timestamps as needed
+];
+
+const sampleValues = [0, 1, null]; // Example sample values corresponding to timestamps
+const colors = []; // Array to store colors for each data point
+
+// Assign colors based on sample values
+sampleValues.forEach(value => {
+  if (value === 0) {
+    colors.push('yellow'); // Yellow for sample value 0
+  } else if (value === 1) {
+    colors.push('green'); // Green for sample value 1
+  } else {
+    colors.push('red'); // Red for missing sample value
+  }
+});
+
+// Create an array of x-axis values (timestamps in ISO string format)
+const xValues = timestamps.map(timestamp => timestamp.toISOString());
+
+// Create a trace for the line chart
+const trace = {
+  x: xValues, // Timestamps on the horizontal axis
+  y: sampleValues, // Sample values on the vertical axis
+  type: 'scatter', // Scatter plot type
+  mode: 'lines+markers', // Show lines and markers
+  line: {
+    color: 'black' // Color for the line
+  },
+  marker: {
+    color: colors, // Assign colors based on sample values
+    size: 10 // Marker size
+  }
+};
+
+// Layout configuration for the plot
+const layout = {
+  title: 'Sample Data Over Time', // Chart title
+  xaxis: {
+    title: 'Time' // X-axis label
+  },
+  yaxis: {
+    title: 'Sample Value' // Y-axis label
+  }
+};
+
+// Create the plot
+Plotly.newPlot('chart-container', [trace], layout);
+</script>
+
+</body>
+</html>
